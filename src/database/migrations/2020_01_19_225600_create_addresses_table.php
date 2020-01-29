@@ -23,8 +23,8 @@ class CreateAddressesTable extends Migration
             $table->string('state_county');
             $table->string('postcode');
             $table->string('country_code');
-            $table->decimal('latitude', 11, 8);
-            $table->decimal('longitude', 11, 8);
+            $table->decimal('latitude', 11, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
             $table->json('meta')->default('[]');
         });
     }
