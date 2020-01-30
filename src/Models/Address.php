@@ -80,9 +80,15 @@ class Address extends Model
 
     public function geocode(): void
     {
-        $simpleGoogleMaps = SimpleGoogleMapsFactory::getByKey(config('address.geocoding.google-maps.api-key'));
+        $apiKey = config('address.geocoding.google-maps.api-key');
 
-        $latLng = $simpleGoogleMaps->allowPartialMatches()->geocode($this->human_readable);
+        if ($apiKey) {
+            return;
+        }
+
+        $latLng = SimpleGoogleMapsFactory::getByKey($apiKey)
+            ->allowPartialMatches()
+            ->geocode($this->human_readable);
 
         $this->latitude = $latLng->lat;
         $this->longitude = $latLng->long;
