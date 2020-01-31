@@ -83,7 +83,7 @@ class Address extends Model
 
     public function geocode(): void
     {
-        if (!config('address.geocoding.enabled')) {
+        if (!config('addresses.geocoding.enabled')) {
             return;
         }
 
