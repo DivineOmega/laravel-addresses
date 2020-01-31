@@ -4,7 +4,7 @@ namespace DivineOmega\LaravelAddresses\Models;
 
 use DivineOmega\Countries\Countries;
 use DivineOmega\Countries\Country;
-use DivineOmega\LaravelAddresses\DistanceStrategies\DirectDistanceStrategy;
+use DivineOmega\LaravelAddresses\DistanceStrategies\Direct;
 use DivineOmega\LaravelAddresses\Exceptions\InvalidCountryException;
 use DivineOmega\LaravelAddresses\Exceptions\InvalidUKPostcodeException;
 use DivineOmega\LaravelAddresses\Interfaces\DistanceStrategyInterface;
@@ -103,7 +103,7 @@ class Address extends Model
     public function distanceTo(Address $to, DistanceStrategyInterface $distanceStrategy = null): float
     {
         if (!$distanceStrategy) {
-            $distanceStrategy = new DirectDistanceStrategy();
+            $distanceStrategy = new Direct();
         }
 
         return $distanceStrategy->getDistance($this, $to);

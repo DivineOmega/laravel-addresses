@@ -8,7 +8,7 @@ use DivineOmega\Distance\Types\Haversine;
 use DivineOmega\LaravelAddresses\Interfaces\DistanceStrategyInterface;
 use DivineOmega\LaravelAddresses\Models\Address;
 
-class DirectDistanceStrategy implements DistanceStrategyInterface
+class Direct implements DistanceStrategyInterface
 {
     public function getDistance(Address $from, Address $to): float
     {
