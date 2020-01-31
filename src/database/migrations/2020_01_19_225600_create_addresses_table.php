@@ -25,7 +25,7 @@ class CreateAddressesTable extends Migration
             $table->string('country_code');
             $table->decimal('latitude', 11, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-            $table->json('meta')->default('[]');
+            $table->json('meta')->nullable();
         });
     }
 
