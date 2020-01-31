@@ -9,10 +9,10 @@ use DivineOmega\LaravelAddresses\Exceptions\InvalidCountryException;
 use DivineOmega\LaravelAddresses\Exceptions\InvalidUKPostcodeException;
 use DivineOmega\LaravelAddresses\Helpers\GoogleMaps;
 use DivineOmega\LaravelAddresses\Interfaces\DistanceStrategyInterface;
+use DivineOmega\LaravelAddresses\Objects\Location;
 use DivineOmega\Postcodes\Utils\Validator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use LangleyFoxall\SimpleGoogleMaps\Factories\SimpleGoogleMapsFactory;
 
 /**
  * @property string line_1
@@ -66,11 +66,6 @@ class Address extends Model
         ])->filter()->implode(', ');
     }
 
-    public function isGeocoded()
-    {
-        return $this->latitude !== null && $this->longitude !== null;
-    }
-
     public function validate(): void
     {
         if (!$this->country) {
@@ -100,12 +95,17 @@ class Address extends Model
         $this->longitude = $latLng->long;
     }
 
+    public function isGeocoded(): bool
+    {
+        return $this->latitude !== null && $this->longitude !== null;
+    }
+
     public function distanceTo(Address $to, DistanceStrategyInterface $distanceStrategy = null): float
     {
         if (!$distanceStrategy) {
             $distanceStrategy = new Direct();
         }
 
-        return $distanceStrategy->getDistance($this, $to);
+        return $distanceStrategy->getDistance(new Location($this), new Location($to));
     }
 }

@@ -5,14 +5,15 @@ namespace DivineOmega\LaravelAddresses\DistanceStrategies;
 use DivineOmega\LaravelAddresses\Helpers\GoogleMaps;
 use DivineOmega\LaravelAddresses\Interfaces\DistanceStrategyInterface;
 use DivineOmega\LaravelAddresses\Models\Address;
+use DivineOmega\LaravelAddresses\Objects\Location;
 use LangleyFoxall\SimpleGoogleMaps\Objects\Enums\TravelMode;
 
 class Driving implements DistanceStrategyInterface
 {
-    public function getDistance(Address $from, Address $to): float
+    public function getDistance(Location $from, Location $to): float
     {
         return GoogleMaps::instance()
-            ->directions($from->human_readable, $to->human_readable, TravelMode::DRIVING)
+            ->directions($from, $to, TravelMode::DRIVING)
             ->distance();
     }
 }

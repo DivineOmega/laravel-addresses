@@ -2,9 +2,9 @@
 
 namespace DivineOmega\LaravelAddresses\Interfaces;
 
-use DivineOmega\LaravelAddresses\Models\Address;
+use DivineOmega\LaravelAddresses\Objects\Location;
 
 interface DistanceStrategyInterface
 {
-    public function getDistance(Address $from, Address $to): float;
+    public function getDistance(Location $from, Location $to): float;
 }
