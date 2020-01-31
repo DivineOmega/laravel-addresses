@@ -82,6 +82,10 @@ class Address extends Model
 
     public function geocode(): void
     {
+        if (!config('address.geocoding.enabled')) {
+            return;
+        }
+
         $apiKey = config('address.geocoding.google-maps.api-key');
 
         if ($apiKey) {
