@@ -24,5 +24,12 @@
         "psr-4": {
             "DivineOmega\\LaravelAddresses\\": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DivineOmega\\LaravelAddresses\\ServiceProvider"
+            ]
+        }
     }
 }
