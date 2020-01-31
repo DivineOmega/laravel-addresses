@@ -14,8 +14,8 @@ class Direct implements DistanceStrategyInterface
     {
         return (new Distance())
             ->type(new Haversine())
-            ->from(new Point($from->latitude, $from->longitude))
-            ->to(new Point($to->latitude, $to->longitude))
+            ->from(new Point((float) $from->latitude, (float) $from->longitude))
+            ->to(new Point((float) $to->latitude, (float) $to->longitude))
             ->get();
     }
 }
