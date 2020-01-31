@@ -7,6 +7,7 @@ use DivineOmega\Countries\Country;
 use DivineOmega\LaravelAddresses\DistanceStrategies\Direct;
 use DivineOmega\LaravelAddresses\Exceptions\InvalidCountryException;
 use DivineOmega\LaravelAddresses\Exceptions\InvalidUKPostcodeException;
+use DivineOmega\LaravelAddresses\Helpers\GoogleMaps;
 use DivineOmega\LaravelAddresses\Interfaces\DistanceStrategyInterface;
 use DivineOmega\Postcodes\Utils\Validator;
 use Illuminate\Database\Eloquent\Model;
@@ -86,13 +87,7 @@ class Address extends Model
             return;
         }
 
-        $apiKey = config('address.geocoding.google-maps.api-key');
-
-        if ($apiKey) {
-            return;
-        }
-
-        $latLng = SimpleGoogleMapsFactory::getByKey($apiKey)
+        $latLng = GoogleMaps::instance()
             ->allowPartialMatches()
             ->geocode($this->human_readable);
 
