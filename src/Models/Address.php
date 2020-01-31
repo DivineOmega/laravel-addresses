@@ -31,8 +31,6 @@ class Address extends Model
 {
     protected $casts = [
         'meta' => 'array',
-        'latitude' => 'float',
-        'longitude' => 'float',
     ];
 
     protected $appends = [
