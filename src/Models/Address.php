@@ -66,6 +66,11 @@ class Address extends Model
         ])->filter()->implode(', ');
     }
 
+    public function isGeocoded()
+    {
+        return $this->latitude !== null && $this->longitude !== null;
+    }
+
     public function validate(): void
     {
         if (!$this->country) {
