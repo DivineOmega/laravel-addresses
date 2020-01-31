@@ -14,7 +14,7 @@ abstract class GoogleMaps
     {
         $apiKey = config('address.geocoding.google-maps.api-key');
 
-        if ($apiKey) {
+        if (!$apiKey) {
             throw new Exception('No Google Maps API key specified.');
         }
 
