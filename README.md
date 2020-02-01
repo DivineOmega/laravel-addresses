@@ -110,7 +110,32 @@ $address = $user->addresses()->first();
 try {
     $address->validate();
 } catch (\DivineOmega\LaravelAddresses\Exceptions\InvalidUKPostcodeException $e) {
-    return back()->withErrors(['Invalid UK postcode.'])
+    return back()->withErrors(['Invalid UK postcode.']);
 }
+```
+
+### Distance calculation
+
+The distance between two different addresses can be calculated using the `distanceTo` 
+method. 
+
+```php
+$address1 = $user->addresses[0];
+$address2 = $user->addresses[1];
+
+$distanceKilometres = $address1->distanceTo($address2);
+```
+
+By default the direct distance is calculated (as the crow flies). If you want, you can 
+specify a different type of distance calculation, such as driving distance.
+
+```php
+use \DivineOmega\LaravelAddresses\DistanceStrategies\Driving;
+use \DivineOmega\LaravelAddresses\DistanceStrategies\Walking;
+use \DivineOmega\LaravelAddresses\DistanceStrategies\Cycling;
+
+$drivingDistanceKm = $address1->distanceTo($address2, Driving::class);
+$walkingDistanceKm = $address1->distanceTo($address2, Walking::class);
+$cyclingDistanceKm = $address1->distanceTo($address2, Cycling::class);
 ```
 
