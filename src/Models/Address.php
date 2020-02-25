@@ -46,6 +46,10 @@ class Address extends Model
 
     public function getCountryAttribute(): ?Country
     {
+        if (!$this->country_code) {
+            return null;
+        }
+
         return (new Countries())->getByIsoCode($this->country_code);
     }
 
