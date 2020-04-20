@@ -12,7 +12,7 @@ abstract class GoogleMaps
 
     public static function instance(): SimpleGoogleMaps
     {
-        $apiKey = config('address.geocoding.google-maps.api-key');
+        $apiKey = config('addresses.geocoding.google-maps.api-key');
 
         if (!$apiKey) {
             throw new Exception('No Google Maps API key specified.');
