@@ -7,6 +7,7 @@ use DivineOmega\Countries\Country;
 use DivineOmega\LaravelAddresses\DistanceStrategies\Direct;
 use DivineOmega\LaravelAddresses\Exceptions\InvalidCountryException;
 use DivineOmega\LaravelAddresses\Exceptions\InvalidUKPostcodeException;
+use DivineOmega\LaravelAddresses\Helpers\CountryHelper;
 use DivineOmega\LaravelAddresses\Helpers\GoogleMaps;
 use DivineOmega\LaravelAddresses\Interfaces\DistanceStrategyInterface;
 use DivineOmega\LaravelAddresses\Objects\Location;
@@ -50,7 +51,7 @@ class Address extends Model
             return null;
         }
 
-        return (new Countries())->getByIsoCode($this->country_code);
+        return CountryHelper::getByIsoCode($this->country_code);
     }
 
     public function getCountryNameAttribute(): ?string
