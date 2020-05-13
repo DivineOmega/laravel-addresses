@@ -7,7 +7,7 @@ Features:
 
 * Automatic geocoding of addresses on change, provided by the Google Maps API
 * Validation of address details (country, postcode)
-* Conversation of ISO country code to country name
+* Conversion of ISO country code to country name
 * Ability to store meta data about addresses - e.g. `['type' => 'delivery', 'name' => 'home_address']`
 
 ## Installation
