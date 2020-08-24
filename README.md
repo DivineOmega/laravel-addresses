@@ -94,6 +94,29 @@ $address->geocode();
 $address->save();
 ```
 
+Note that geocoding can fail, in which case, you can detect that it failed by checking whether the
+address is geocoded after attempting geocoding:
+
+```php
+$address->geocode();
+
+if (!$address->isGeocoded()) {
+    // Handle geocoding failure here.
+}
+```
+
+If there was an existing latitude/longitude set and geocoding fails, these are cleared.
+
+```php
+$address->geocode(); // Succeeds
+
+// Change the address details here.
+
+$address->geocode(); // Fails
+
+// Latitude and longitude are now null.
+```
+
 ### Validation
 
 Validation is automatic when an address is created or updated. You can expect an

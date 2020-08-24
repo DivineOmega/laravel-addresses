@@ -96,8 +96,13 @@ class Address extends Model
             ->allowPartialMatches()
             ->geocode($this->human_readable);
 
-        $this->latitude = $latLng->lat;
-        $this->longitude = $latLng->long;
+        if ($latLng) {
+            $this->latitude = $latLng->lat;
+            $this->longitude = $latLng->long;
+        } else {
+            $this->latitude = null;
+            $this->longitude = null;
+        }
     }
 
     public function isGeocoded(): bool
