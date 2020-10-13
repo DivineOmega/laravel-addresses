@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'validation' => [
+        'uk-postcode' => true,
+        'country-code' => true,
+    ],
     'geocoding' => [
         'enabled' => true,
         'google-maps' => [
