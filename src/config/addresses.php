@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'gbr-validation' => [
+        'enabled' => true
+    ],
     'geocoding' => [
         'enabled' => true,
         'google-maps' => [

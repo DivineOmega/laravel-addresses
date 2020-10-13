@@ -79,7 +79,7 @@ class Address extends Model
 
         switch ($this->country->isoCodeAlpha3) {
             case 'GBR':
-                if (config('addresses.uk_postcode_check.enabled') && !Validator::validatePostcode($this->postcode)) {
+                if (config('addresses.gbr-validation.enabled') && !Validator::validatePostcode($this->postcode)) {
                     throw new InvalidUKPostcodeException();
                 }
                 break;
