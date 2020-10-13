@@ -1,8 +1,9 @@
 <?php
 
 return [
-    'gbr-validation' => [
-        'enabled' => true
+    'validation' => [
+        'uk-postcode' => true,
+        'country-code' => true,
     ],
     'geocoding' => [
         'enabled' => true,

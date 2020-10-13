@@ -73,13 +73,13 @@ class Address extends Model
 
     public function validate(): void
     {
-        if (!$this->country) {
+        if (config('addresses.validation.country-code') && !$this->country) {
             throw new InvalidCountryException();
         }
 
         switch ($this->country->isoCodeAlpha3) {
             case 'GBR':
-                if (config('addresses.gbr-validation.enabled') && !Validator::validatePostcode($this->postcode)) {
+                if (config('addresses.validation.uk-postcode') && !Validator::validatePostcode($this->postcode)) {
                     throw new InvalidUKPostcodeException();
                 }
                 break;
