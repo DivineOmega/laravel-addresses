@@ -73,13 +73,13 @@ class Address extends Model
 
     public function validate(): void
     {
-        if (!$this->country) {
+        if (config('addresses.validation.country-code') && !$this->country) {
             throw new InvalidCountryException();
         }
 
         switch ($this->country->isoCodeAlpha3) {
             case 'GBR':
-                if (!Validator::validatePostcode($this->postcode)) {
+                if (config('addresses.validation.uk-postcode') && !Validator::validatePostcode($this->postcode)) {
                     throw new InvalidUKPostcodeException();
                 }
                 break;
@@ -96,8 +96,13 @@ class Address extends Model
             ->allowPartialMatches()
             ->geocode($this->human_readable);
 
-        $this->latitude = $latLng->lat;
-        $this->longitude = $latLng->long;
+        if ($latLng) {
+            $this->latitude = $latLng->lat;
+            $this->longitude = $latLng->long;
+        } else {
+            $this->latitude = null;
+            $this->longitude = null;
+        }
     }
 
     public function isGeocoded(): bool

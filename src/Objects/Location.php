@@ -2,6 +2,7 @@
 
 namespace DivineOmega\LaravelAddresses\Objects;
 
+use Exception;
 use DivineOmega\Distance\Point;
 use DivineOmega\LaravelAddresses\Models\Address;
 
@@ -14,6 +15,10 @@ class Location
     {
         if (!$address->isGeocoded()) {
             $address->geocode();
+        }
+
+        if (!$address->isGeocoded()) {
+            throw new Exception('Failed to geocode the Address to create a Location.');
         }
 
         $this->lat = $address->latitude;
