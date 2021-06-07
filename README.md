@@ -32,6 +32,15 @@ Note that by default, you require a Google Maps API key in order to provide
 address geocoding and distance calculations. If you do not wish to use geocoding,
 this can be disabled in the configuration.
 
+### Strict geocoding
+
+By default, geocoding is configured as "lenient"; if, for example, the name of a real city is given
+but the postcode and street address refer to a nonexistent place, it will geocode as the center of
+that city.
+
+Set the `geocoding.strict` flag to `true` in the configuration file to instead fail to geocode in
+this scenario.
+
 ## Usage
 
 Assign the `HasAddresses` trait to the model you wish to have associated addresses.

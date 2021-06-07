@@ -9,6 +9,7 @@ return [
         'enabled' => true,
         'google-maps' => [
             'api-key' => env('GEOCODING_GOOGLE_MAPS_API_KEY'),
-        ]
+        ],
+        'strict' => false,
     ]
 ];
