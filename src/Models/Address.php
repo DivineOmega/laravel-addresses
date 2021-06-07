@@ -92,9 +92,13 @@ class Address extends Model
             return;
         }
 
-        $latLng = GoogleMaps::instance()
-            ->allowPartialMatches()
-            ->geocode($this->human_readable);
+        $googleMaps = GoogleMaps::instance();
+
+        if (!config('addresses.geocoding.strict')) {
+            $googleMaps = $googleMaps->allowPartialMatches();
+        }
+
+        $latLng = $googleMaps->geocode($this->human_readable);
 
         if ($latLng) {
             $this->latitude = $latLng->lat;
