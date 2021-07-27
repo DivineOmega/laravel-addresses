@@ -7,7 +7,7 @@ Features:
 
 * Automatic geocoding of addresses on change, provided by the Google Maps API
 * Validation of address details (country, postcode)
-* Conversation of ISO country code to country name
+* Conversion of ISO country code to country name
 * Ability to store meta data about addresses - e.g. `['type' => 'delivery', 'name' => 'home_address']`
 
 ## Installation
@@ -31,6 +31,15 @@ This will create the default configuration file at `config/addresses.php`.
 Note that by default, you require a Google Maps API key in order to provide
 address geocoding and distance calculations. If you do not wish to use geocoding,
 this can be disabled in the configuration.
+
+### Strict geocoding
+
+By default, geocoding is configured as "lenient"; if, for example, the name of a real city is given
+but the postcode and street address refer to a nonexistent place, it will geocode as the center of
+that city.
+
+Set the `geocoding.strict` flag to `true` in the configuration file to instead fail to geocode in
+this scenario.
 
 ## Usage
 
@@ -92,6 +101,29 @@ You can also manually geocode the address if needed.
 $address = $user->addresses()->first();
 $address->geocode();
 $address->save();
+```
+
+Note that geocoding can fail, in which case, you can detect that it failed by checking whether the
+address is geocoded after attempting geocoding:
+
+```php
+$address->geocode();
+
+if (!$address->isGeocoded()) {
+    // Handle geocoding failure here.
+}
+```
+
+If there was an existing latitude/longitude set and geocoding fails, these are cleared.
+
+```php
+$address->geocode(); // Succeeds
+
+// Change the address details here.
+
+$address->geocode(); // Fails
+
+// Latitude and longitude are now null.
 ```
 
 ### Validation

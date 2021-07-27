@@ -7,6 +7,7 @@ use DivineOmega\Countries\Country;
 use DivineOmega\LaravelAddresses\DistanceStrategies\Direct;
 use DivineOmega\LaravelAddresses\Exceptions\InvalidCountryException;
 use DivineOmega\LaravelAddresses\Exceptions\InvalidUKPostcodeException;
+use DivineOmega\LaravelAddresses\Helpers\CountryHelper;
 use DivineOmega\LaravelAddresses\Helpers\GoogleMaps;
 use DivineOmega\LaravelAddresses\Interfaces\DistanceStrategyInterface;
 use DivineOmega\LaravelAddresses\Objects\Location;
@@ -50,7 +51,7 @@ class Address extends Model
             return null;
         }
 
-        return (new Countries())->getByIsoCode($this->country_code);
+        return CountryHelper::getByIsoCode($this->country_code);
     }
 
     public function getCountryNameAttribute(): ?string
@@ -72,13 +73,13 @@ class Address extends Model
 
     public function validate(): void
     {
-        if (!$this->country) {
+        if (config('addresses.validation.country-code') && !$this->country) {
             throw new InvalidCountryException();
         }
 
         switch ($this->country->isoCodeAlpha3) {
             case 'GBR':
-                if (!Validator::validatePostcode($this->postcode)) {
+                if (config('addresses.validation.uk-postcode') && !Validator::validatePostcode($this->postcode)) {
                     throw new InvalidUKPostcodeException();
                 }
                 break;
@@ -91,12 +92,21 @@ class Address extends Model
             return;
         }
 
-        $latLng = GoogleMaps::instance()
-            ->allowPartialMatches()
-            ->geocode($this->human_readable);
+        $googleMaps = GoogleMaps::instance();
 
-        $this->latitude = $latLng->lat;
-        $this->longitude = $latLng->long;
+        if (!config('addresses.geocoding.strict')) {
+            $googleMaps = $googleMaps->allowPartialMatches();
+        }
+
+        $latLng = $googleMaps->geocode($this->human_readable);
+
+        if ($latLng) {
+            $this->latitude = $latLng->lat;
+            $this->longitude = $latLng->long;
+        } else {
+            $this->latitude = null;
+            $this->longitude = null;
+        }
     }
 
     public function isGeocoded(): bool
