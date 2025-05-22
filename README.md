@@ -10,6 +10,10 @@ Features:
 * Conversion of ISO country code to country name
 * Ability to store meta data about addresses - e.g. `['type' => 'delivery', 'name' => 'home_address']`
 
+## Compatibility
+
+This package supports Laravel versions 5.6 through 10.
+
 ## Installation
 
 To install Laravel Addresses, just run the following Composer command.
